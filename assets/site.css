@@ -463,3 +463,6 @@ h2.section, .page-title { display: flex; align-items: center; gap: 12px; font-si
   .js .reveal { opacity: 1; transform: none; }
   .ticker-view { overflow-x: auto; }
 }
+
+/* ночью облака тусклее: на тёмном небе белые пятна выглядят чужими */
+.hero[data-tod="night"] .fxc { color: rgba(110, 120, 150, .55); opacity: .55; }
