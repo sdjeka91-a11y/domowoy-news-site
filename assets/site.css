@@ -70,77 +70,6 @@ img, svg { max-width: 100%; }
 .tgbtn:hover { color: #fff; background: var(--btn-hover); }
 
 /* Первый экран: фото по времени суток и погоде (или нарисованное поле пшеницы летом) */
-.hero { position: relative; height: clamp(560px, 82vh, 720px); overflow: hidden; background: #3a2412; isolation: isolate; }
-.hero-media { position: absolute; inset: 0; background: #3a2412 url("tulpar/tulpar-poster.webp") 62% 50% / cover no-repeat; transition: filter 1.2s ease; }
-.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%; opacity: 0; transition: opacity .8s ease; }
-.hero-video.on { opacity: 1; }
-.hero[data-tod="night"] .hero-media { filter: brightness(.34) saturate(.7) hue-rotate(-12deg); }
-/* мягкое затемнение под текстом слева: белый текст на самом светлом месте неба остаётся выше 4,5:1 */
-.hero-tint { position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(24, 12, 6, .78) 0%, rgba(24, 12, 6, .62) 30%, rgba(24, 12, 6, .22) 58%, rgba(24, 12, 6, 0) 78%); transition: background 1.2s; }
-.hero[data-tod="night"] .hero-tint { background: linear-gradient(90deg, rgba(6, 10, 28, .6) 0%, rgba(6, 10, 28, .36) 40%, rgba(6, 10, 28, .1) 80%); }
-.hero-inner { position: relative; z-index: 5; height: 100%; display: flex; align-items: stretch; padding-top: 28px; padding-bottom: 28px; }
-.hero-col { width: min(430px, 100%); display: flex; flex-direction: column; justify-content: space-between; gap: 18px; color: #fff; }
-.hero-text { text-shadow: 0 2px 14px rgba(0, 0, 0, .5); }
-.kicker { margin: 0 0 10px; font-family: "Golos Text", "Manrope", system-ui, sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .05em; color: #fff; text-transform: uppercase; opacity: .92; }
-.hero h1 { margin: 0; font-family: "Golos Text", "Manrope", "Segoe UI", system-ui, sans-serif; font-size: clamp(32px, 4.4vw, 54px); line-height: 1.1; letter-spacing: -.012em; font-weight: 700; color: #fff; }
-.hero .date { margin: 12px 0 0; font-family: "Golos Text", "Manrope", system-ui, sans-serif; font-size: 19px; font-weight: 600; color: #fff; }
-.hero .date::first-letter { text-transform: uppercase; }
-.hero .trend { display: inline-block; margin: 12px 0 0; padding: 6px 14px; border-radius: 999px; background: rgba(255, 255, 255, .2); color: #fff; font-weight: 700; font-size: 15px; text-shadow: none; backdrop-filter: blur(6px); }
-/* «стеклянный» блок погоды в небе слева сверху */
-.glass { background: rgba(30, 18, 12, .5); border: 1px solid rgba(255, 255, 255, .34); border-radius: 22px; backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 10px 34px rgba(0, 0, 0, .25); }
-@supports not (backdrop-filter: blur(1px)) { .glass { background: rgba(40, 24, 12, .62); } }
-.hw { padding: 16px 18px 12px; color: #fff; text-shadow: 0 1px 6px rgba(0, 0, 0, .45); }
-.hw-now { display: flex; align-items: center; gap: 14px; }
-.hw-big { width: 58px; height: 58px; flex: none; fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; animation: hw-bob 6s ease-in-out infinite; }
-.hw-temp { font-size: 46px; font-weight: 700; line-height: 1; font-family: "Golos Text", "Manrope", system-ui, sans-serif; }
-.hw-text { font-size: 14.5px; font-weight: 600; margin-top: 3px; }
-.hw-side { margin-left: auto; text-align: right; font-size: 13.5px; line-height: 1.5; }
-.hw-hours, .hw-days { list-style: none; margin: 10px 0 0; padding: 10px 0 0; border-top: 1px solid rgba(255, 255, 255, .3); display: flex; justify-content: space-between; gap: 4px; font-size: 13px; }
-.hw-hours li, .hw-days li { display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 0; }
-.hw-i { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-.hh, .dd { opacity: .88; font-size: 12px; text-transform: uppercase; }
-.hw-days .num { font-size: 12px; white-space: nowrap; }
-.hw-src { margin-top: 8px; font-size: 11px; opacity: .85; }
-.hw-none { margin: 0; font-size: 14px; }
-.hw-toggle { display: none; margin-top: 8px; padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .5); background: rgba(255, 255, 255, .12); color: #fff; font: inherit; font-size: 12.5px; cursor: pointer; }
-@keyframes hw-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-/* ночь: звёзды и луна поверх затемнённого видео */
-.night-sky { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s; pointer-events: none; z-index: 2; }
-.hero[data-tod="night"] .night-sky { opacity: 1; }
-.night-sky .moon { position: absolute; right: 12%; top: 12%; width: 84px; height: 84px; color: #f6e9b8; filter: drop-shadow(0 0 26px rgba(246, 233, 184, .6)); }
-/* слои погоды поверх видео: показывается тот, что подходит состоянию (data-weather, data-fx) */
-.fx { position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
-.fx > div { position: absolute; inset: 0; opacity: 0; transition: opacity 1s; }
-.hero[data-weather="cloudy"] .fx-clouds, .hero[data-weather="rain"] .fx-clouds, .hero[data-weather="snow"] .fx-clouds, .hero[data-weather="wind"] .fx-clouds { opacity: 1; }
-.hero[data-weather="rain"] .fx-rain { opacity: 1; }
-.hero[data-weather="snow"] .fx-snow { opacity: 1; }
-.hero[data-fx="fog"] .fx-fog { opacity: 1; }
-.hero[data-fx="thunder"] .fx-rain, .hero[data-fx="thunder"] .fx-clouds, .hero[data-fx="thunder"] .fx-flash { opacity: 1; }
-.hero[data-weather="cloudy"] .hero-media, .hero[data-weather="rain"] .hero-media, .hero[data-weather="snow"] .hero-media, .hero[data-fx="fog"] .hero-media { filter: brightness(.82) saturate(.8); }
-.hero[data-weather="rain"][data-tod="night"] .hero-media, .hero[data-weather="snow"][data-tod="night"] .hero-media, .hero[data-weather="cloudy"][data-tod="night"] .hero-media { filter: brightness(.3) saturate(.6); }
-.fxc { position: absolute; color: rgba(255, 255, 255, .8); width: 260px; opacity: .8; animation: fxdrift 90s linear infinite; will-change: transform; }
-.fxc svg { width: 100%; height: auto; display: block; }
-.fxc1 { top: 6%; left: -20%; } .fxc2 { top: 18%; left: -45%; width: 330px; animation-duration: 130s; opacity: .6; } .fxc3 { top: 3%; left: -75%; width: 200px; animation-duration: 160s; opacity: .55; } .fxc4 { top: 24%; left: -100%; width: 240px; animation-duration: 190s; opacity: .5; }
-.hero[data-weather="rain"] .fxc, .hero[data-weather="snow"] .fxc { color: rgba(205, 210, 220, .85); }
-@keyframes fxdrift { to { transform: translateX(220vw); } }
-.drop { position: absolute; top: -8%; width: 1.5px; height: 20px; background: linear-gradient(rgba(255, 255, 255, 0), rgba(235, 245, 255, .75)); animation: fxrain linear infinite; transform: rotate(10deg); will-change: transform; }
-@keyframes fxrain { to { transform: translate3d(-22px, 125vh, 0) rotate(10deg); } }
-.flake { position: absolute; top: -4%; border-radius: 50%; background: #fff; opacity: .9; animation: fxsnow linear infinite; will-change: transform; }
-@keyframes fxsnow { to { transform: translate3d(var(--dx, 20px), 118vh, 0); } }
-.fxf { position: absolute; left: -30%; width: 160%; height: 42%; background: radial-gradient(ellipse at center, rgba(235, 238, 242, .75), rgba(235, 238, 242, 0) 68%); animation: fxfog 38s ease-in-out infinite alternate; will-change: transform; }
-.fxf1 { top: 28%; } .fxf2 { top: 46%; animation-duration: 52s; animation-direction: alternate-reverse; opacity: .8; } .fxf3 { top: 12%; animation-duration: 66s; opacity: .6; }
-@keyframes fxfog { to { transform: translateX(14%); } }
-.fx-flash { background: rgba(235, 240, 255, .9); animation: fxflash 7s infinite; }
-@keyframes fxflash { 0%, 90%, 94%, 100% { opacity: 0; } 91% { opacity: .55; } 92.5% { opacity: .1; } 93.5% { opacity: .4; } }
-.hero[data-fx="thunder"] .fx > .fx-flash { animation: fxflash 7s infinite; }
-/* без движения: постер вместо видео, слои стоят */
-.hero.paused .hero-video { display: none; }
-.hero.paused .fx *, .hero.paused .hw-big, .hero.paused .night-sky .star { animation: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  .hero-video { display: none; }
-  .fx *, .hw-big, .night-sky .star { animation: none !important; }
-}
-
 /* Городская панель */
 .panel { margin: -72px 0 44px; position: relative; z-index: 3; display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: stretch; }
 .cell { border-radius: var(--radius); padding: 22px 24px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(58, 42, 28, .12); }
@@ -206,11 +135,6 @@ img, svg { max-width: 100%; }
 .traffic p { margin: 0 0 10px; font-size: 15px; }
 .traffic .btn.ghost { color: #26323c; border-color: #8aa7b8; }
 .traffic .src { color: #3c4a55; opacity: 1; }
-.hero-photo { position: absolute; right: 24px; top: 40px; width: 300px; margin: 0; background: var(--cream); padding: 8px 8px 0; border-radius: 18px; box-shadow: 0 18px 40px rgba(58, 42, 28, .28); z-index: 3; }
-.hero-photo img { display: block; width: 100%; height: 190px; object-fit: cover; border-radius: 12px; }
-.hero-photo figcaption { font-size: 12px; color: var(--rye-soft); padding: 8px 4px 10px; line-height: 1.35; }
-.hero-photo a { color: inherit; }
-.hero-inner { position: relative; }
 
 /* Карусель */
 .carousel { position: relative; margin-bottom: 52px; }
@@ -365,21 +289,6 @@ h2.section, .page-title { display: flex; align-items: center; gap: 12px; font-si
   .cards, .demo-grid { grid-template-columns: 1fr; }
   .gallery { grid-template-columns: repeat(2, 1fr); }
   .tile img { height: 150px; }
-  .hero { height: 650px; background: linear-gradient(180deg, #3c3050 0, #8a6470 190px, #3a2412 100%); }
-  .hero-media { top: 170px; background-image: url("tulpar/tulpar-poster-m.webp"); background-position: 63% 50%; -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 110px); mask-image: linear-gradient(180deg, transparent 0, #000 110px); }
-  .hero-video { object-position: 63% 50%; }
-  .hero-tint { background: linear-gradient(180deg, rgba(24, 12, 6, .5) 0%, rgba(24, 12, 6, .12) 34%, rgba(24, 12, 6, .1) 52%, rgba(24, 12, 6, .82) 100%); }
-  .hero-col { width: 100%; }
-  .hero-inner { padding-top: 16px; padding-bottom: 20px; }
-  .hw { padding: 12px 14px 10px; }
-  .glass { background: rgba(30, 18, 12, .62); }
-  .hw-big { width: 44px; height: 44px; }
-  .hw-temp { font-size: 38px; }
-  .hw-hours { overflow-x: auto; gap: 14px; justify-content: flex-start; scrollbar-width: none; }
-  .hw-hours::-webkit-scrollbar { display: none; }
-  .js .hw-days { display: none; }
-  .js .hw.open .hw-days { display: flex; }
-  .js .hw-toggle { display: inline-block; }
   .slide { min-height: 380px; padding: 24px; border-radius: 22px; }
   .slide .badge-test, .slide .badge-ai { left: 24px; }
   .slide .mark { font-size: 120px; }
@@ -439,7 +348,6 @@ h2.section, .page-title { display: flex; align-items: center; gap: 12px; font-si
 :root[data-theme="dark"] .fin { background: #1f2622; border-color: #34403a; color: #e9efe9; }
 :root[data-theme="dark"] .fin .code, :root[data-theme="dark"] .fin .src, :root[data-theme="dark"] .fin .stale, :root[data-theme="dark"] .rates .flat .chg { color: #b8c4bb; }
 :root[data-theme="dark"] .rates li { border-bottom-color: #34403a; }
-:root[data-theme="dark"] .hero-text { background: rgba(32, 24, 17, .86); }
 :root[data-theme="dark"] .slide { background: linear-gradient(135deg, color-mix(in srgb, var(--rc) 40%, #1b140e), #1b140e); color: var(--rye); }
 :root[data-theme="dark"] .slide.has-photo { color: #fff; }
 :root[data-theme="dark"] .draft-note { background: #4a3a14; color: #fbefc9; }
@@ -450,7 +358,6 @@ h2.section, .page-title { display: flex; align-items: center; gap: 12px; font-si
   :root:not([data-theme="light"]) .fin { background: #1f2622; border-color: #34403a; color: #e9efe9; }
   :root:not([data-theme="light"]) .fin .code, :root:not([data-theme="light"]) .fin .src, :root:not([data-theme="light"]) .fin .stale, :root:not([data-theme="light"]) .rates .flat .chg { color: #b8c4bb; }
   :root:not([data-theme="light"]) .rates li { border-bottom-color: #34403a; }
-  :root:not([data-theme="light"]) .hero-text { background: rgba(32, 24, 17, .86); }
   :root:not([data-theme="light"]) .slide { background: linear-gradient(135deg, color-mix(in srgb, var(--rc) 40%, #1b140e), #1b140e); color: var(--rye); }
   :root:not([data-theme="light"]) .slide.has-photo { color: #fff; }
   :root:not([data-theme="light"]) .draft-note { background: #4a3a14; color: #fbefc9; }
@@ -459,10 +366,8 @@ h2.section, .page-title { display: flex; align-items: center; gap: 12px; font-si
 
 /* Уменьшение движения */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  html:not([data-motion="on"]) *, html:not([data-motion="on"]) *::before, html:not([data-motion="on"]) *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .js .reveal { opacity: 1; transform: none; }
   .ticker-view { overflow-x: auto; }
 }
 
-/* ночью облака тусклее: на тёмном небе белые пятна выглядят чужими */
-.hero[data-tod="night"] .fxc { color: rgba(110, 120, 150, .55); opacity: .55; }
