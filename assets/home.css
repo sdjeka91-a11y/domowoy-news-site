@@ -141,7 +141,7 @@ html:not(.noblur) .glass { backdrop-filter: blur(5px); -webkit-backdrop-filter: 
 .rates-tbl .num { text-align: right; }
 .rates-tbl .up td:last-child { color: var(--up); } .rates-tbl .down td:last-child { color: var(--down); }
 .rates-tbl.big { max-width: 560px; font-size: 18px; margin: 12px 0; }
-.src { font-size: 12.5px; color: var(--rye-soft); margin: 10px 0 0; }
+.pop .src, main > .src, .forecast + .src { font-size: 12.5px; color: var(--rye-soft); margin: 10px 0 0; }
 .cal { width: 340px; }
 .cal-head { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
 .cal-head b { flex: 1; text-align: center; font-size: 16px; }
@@ -336,3 +336,55 @@ html[data-motion="off"] .dm *, html[data-motion="off"] .fx *, html[data-motion="
 .figure.video.embed iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 16px; background: #000; }
 .vid-desc { margin: 8px 0 0; color: var(--rye-soft); font-size: 15px; }
 .card-pv { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; background: #000; }
+
+/* ---------- Правки по скриншотам телефона (2026-10-26) ---------- */
+/* карточки без наложения: старая панель на телефоне идёт под карточкой «Сегодня» с равными отступами */
+.panel-phone .panel { margin: 14px 0 22px; gap: 14px; }
+@media (max-width: 960px) { .panel-phone { margin-top: 14px; } .panel-phone .cell { min-height: 0; } }
+/* блок «Новости города без шума»: тёмный текст на светлом голубом, светлый на тёмно-синем; кнопки с контрастом не ниже 4,5 */
+.subscribe { background: linear-gradient(135deg, #cfe7f5, #eaf4fa); color: #14283a; border: 1px solid #a9cde4; }
+.subscribe b { color: #0f2234; }
+.subscribe p { color: #1c3347; }
+.subscribe .btn { background: #1f5f8a; color: #fff; }
+.subscribe .btn:hover { background: #174a6d; color: #fff; }
+.subscribe .btn.ghost { background: #fff; color: #0f2234; border: 2px solid #1f5f8a; }
+.subscribe .btn.ghost:hover { background: #e3f1fa; color: #0f2234; }
+:root[data-theme="dark"] .subscribe { background: linear-gradient(135deg, #17354b, #1d4560); color: #f2f8fc; border-color: #2f6389; }
+:root[data-theme="dark"] .subscribe b { color: #fff; }
+:root[data-theme="dark"] .subscribe p { color: #dcecf6; }
+:root[data-theme="dark"] .subscribe .btn { background: #2c7cb0; color: #fff; }
+:root[data-theme="dark"] .subscribe .btn.ghost { background: transparent; color: #fff; border-color: #8fc3e3; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .subscribe { background: linear-gradient(135deg, #17354b, #1d4560); color: #f2f8fc; border-color: #2f6389; }
+  :root:not([data-theme="light"]) .subscribe b { color: #fff; }
+  :root:not([data-theme="light"]) .subscribe p { color: #dcecf6; }
+  :root:not([data-theme="light"]) .subscribe .btn { background: #2c7cb0; color: #fff; }
+  :root:not([data-theme="light"]) .subscribe .btn.ghost { background: transparent; color: #fff; border-color: #8fc3e3; }
+}
+/* Домовёнок целиком в углу, меньше, не уходит за край и не закрывает кнопки */
+.dm-wrap { right: 10px; bottom: 10px; width: 66px; height: 82px; overflow: visible; }
+.dm-wrap svg { position: static; width: 66px; height: auto; display: block; }
+.dm-wrap:hover, .dm-wrap.hi { transform: translateY(-3px); }
+.dm-hint { right: 84px; bottom: 24px; }
+.dm-box { bottom: 100px; }
+@media (max-width: 700px) {
+  .dm-wrap { right: 8px; bottom: 8px; width: 54px; height: 68px; }
+  .dm-wrap svg { width: 54px; }
+  .dm-box { right: 8px; bottom: 84px; }
+  .foot { padding-bottom: 84px; }
+}
+
+/* подписи рубрик в списках: светлее в тёмной теме; подписи к фото всегда видны на сенсорных экранах */
+:root[data-theme="dark"] .li-r, :root[data-theme="dark"] .bigcard .tag { color: color-mix(in srgb, var(--rc) 35%, #ffffff); }
+:root[data-theme="dark"] .bigcard:not(.has-photo) .tag { background: color-mix(in srgb, var(--rc) 55%, #1b140e); color: #fff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .li-r { color: color-mix(in srgb, var(--rc) 35%, #ffffff); } }
+@media (hover: none) { .yt figcaption { opacity: 1; } }
+/* кнопки внутри светлых колонок «Ваш Петропавловск» остаются тёмными и в тёмной теме */
+.ycol .btn.ghost { color: #3a2a1c; background: rgba(255, 255, 255, .55); border-color: #b9923a; }
+.ycol .btn.ghost:hover { background: #fff; color: #3a2a1c; }
+
+/* Мини-плеер радио (появляется только при наличии разрешённых станций) */
+.radio{display:flex;align-items:center;gap:6px;margin-left:8px}
+.radio .rsel{max-width:120px;font:inherit;font-size:13px;background:transparent;color:inherit;border:1px solid currentColor;border-radius:8px;padding:3px 4px}
+.radio .rvol{width:70px}
+@media (max-width:600px){.radio .rsel,.radio .rvol{display:none}}
