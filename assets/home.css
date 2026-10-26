@@ -383,8 +383,22 @@ html[data-motion="off"] .dm *, html[data-motion="off"] .fx *, html[data-motion="
 .ycol .btn.ghost { color: #3a2a1c; background: rgba(255, 255, 255, .55); border-color: #b9923a; }
 .ycol .btn.ghost:hover { background: #fff; color: #3a2a1c; }
 
-/* Мини-плеер радио (появляется только при наличии разрешённых станций) */
-.radio{display:flex;align-items:center;gap:6px;margin-left:8px}
-.radio .rsel{max-width:120px;font:inherit;font-size:13px;background:transparent;color:inherit;border:1px solid currentColor;border-radius:8px;padding:3px 4px}
-.radio .rvol{width:70px}
-@media (max-width:600px){.radio .rsel,.radio .rvol{display:none}}
+/* «Радио Домовой»: мини-плеер в шапке */
+.radio{display:flex;align-items:center;gap:4px;margin-left:6px}
+.radio .rvol{width:72px;accent-color:var(--accent,#b8531a)}
+.radio-line{flex:0 0 100%;width:100%;font-size:13px;line-height:1.35;padding:4px 16px 6px;background:var(--card,#fff7e6);color:var(--ink,#2b1b0e);border-top:1px solid rgba(0,0,0,.08)}
+.radio-line[hidden]{display:none}
+.radio-line a{color:inherit;text-decoration:underline}
+.top{flex-wrap:wrap}
+:root[data-theme="dark"] .radio-line{background:#241a12;color:#f1e6d3;border-top-color:rgba(255,255,255,.12)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .radio-line{background:#241a12;color:#f1e6d3;border-top-color:rgba(255,255,255,.12)}}
+@media (max-width:600px){.radio .rvol{display:none}.radio-line{font-size:12px;padding:3px 12px 5px}}
+.rlist{list-style:none;padding:0;margin:12px 0}
+.rtrack{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(128,128,128,.25)}
+.rplay{flex:0 0 40px;width:40px;height:40px;border-radius:50%;border:0;background:#8a3d0f;color:#fff;font-size:15px;cursor:pointer}
+.rplay.on{background:#2f5d3a}
+.rg{font-size:13px;opacity:.8}
+.rmeta{font-size:13px;opacity:.85}
+.rother{list-style:none;padding:0}
+.rother li{padding:10px 0;border-bottom:1px solid rgba(128,128,128,.25)}
+@media (max-width:900px){.radio .rvol{display:none}}
