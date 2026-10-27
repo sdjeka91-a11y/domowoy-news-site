@@ -371,3 +371,7 @@ h2.section, .page-title { display: flex; align-items: center; gap: 12px; font-si
   .ticker-view { overflow-x: auto; }
 }
 
+
+/* Врезка «Коротко» и подзаголовки длинных материалов */
+.brief{border-left:4px solid var(--accent,#8a5a1c);background:rgba(138,90,28,.08);border-radius:0 10px 10px 0;padding:12px 18px;margin:20px 0}
+.brief ul{margin:6px 0 0;padding-left:20px}
