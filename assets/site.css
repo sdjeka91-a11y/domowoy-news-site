@@ -375,3 +375,32 @@ h2.section, .page-title { display: flex; align-items: center; gap: 12px; font-si
 /* Врезка «Коротко» и подзаголовки длинных материалов */
 .brief{border-left:4px solid var(--accent,#8a5a1c);background:rgba(138,90,28,.08);border-radius:0 10px 10px 0;padding:12px 18px;margin:20px 0}
 .brief ul{margin:6px 0 0;padding-left:20px}
+
+/* ===== Плавные анимации (animate.js; движение отключает prefers-reduced-motion и переключатель на сайте) ===== */
+/* Заголовок статьи по строкам: до разбора скрыт, но не дольше 1,2 с, даже если скрипт не загрузился */
+.dm-motion .article > h1 { visibility: hidden; animation: dm-unhide 0s linear 1.2s forwards; }
+.dm-motion .article > h1.dm-ready { visibility: visible; animation: none; }
+@keyframes dm-unhide { to { visibility: visible; } }
+.dm-line { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+.dm-line > span { display: block; transform: translateY(105%); animation: dm-line .7s cubic-bezier(.2, .7, .2, 1) forwards; animation-delay: calc(var(--i, 0) * 90ms); }
+@keyframes dm-line { to { transform: none; } }
+/* GSAP сам ведёт появление блоков: CSS-переход мешал бы (двойное сглаживание) */
+html.dm-gsap .reveal { transition: none; }
+/* Меню и кнопки: лёгкий hover, у основных кнопок мягкое свечение (чистый CSS) */
+@media (hover: hover) {
+  .nav a { transition: background-color .2s ease, color .2s ease, transform .2s ease; }
+  .nav a:hover { transform: translateY(-1px); }
+  .btn, .tgbtn { transition: background-color .2s ease, box-shadow .25s ease, transform .2s ease; }
+  .btn:not(.ghost):hover, .tgbtn:hover { transform: translateY(-1px); box-shadow: 0 0 0 4px rgba(160, 74, 11, .14), 0 8px 22px rgba(160, 74, 11, .28); }
+  .btn:not(.ghost):focus-visible, .tgbtn:focus-visible { box-shadow: 0 0 0 4px rgba(160, 74, 11, .22), 0 8px 22px rgba(160, 74, 11, .28); }
+  .btn.ghost { transition: background-color .2s ease, border-color .2s ease; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion="on"]) .dm-line > span { animation: none !important; transform: none !important; }
+  html:not([data-motion="on"]) .article > h1 { visibility: visible !important; animation: none !important; }
+}
+/* Служебные правила Lenis (по документации библиотеки) */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
